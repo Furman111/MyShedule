@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Shedule shedule = new Shedule(new GregorianCalendar(2017, 2, 6),"SSAU","6310",
                 new SheduleWeek(
                         new SheduleDay(

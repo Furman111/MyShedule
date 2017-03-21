@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/double_period_row"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/double_period_linear_layout"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
     android:layout_margin="3dp"
     android:background="@color/colorBackgroundDoublePeriod">
 
@@ -66,4 +67,4 @@
 
     </LinearLayout>
 
-</TableRow>
+</LinearLayout>

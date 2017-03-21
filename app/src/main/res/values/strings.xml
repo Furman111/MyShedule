@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shedule</string>
+    <string name="app_name">Расписание</string>
 
     <string name="monday">Понедельник</string>
     <string name="tuesday">Вторник</string>
@@ -15,5 +15,7 @@
     <string name="fourth_week">Четвёртая неделя</string>
     <string name="fifth_week">Пятая неделя</string>
     <string name="sixth_week">Шестая неделя</string>
+
+    <string name="day_off">Выходной</string>
 
 </resources>
