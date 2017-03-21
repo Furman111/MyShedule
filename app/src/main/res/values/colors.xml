@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorDayOfWeek">#1e7c5f</color>
+    <color name="colorTime">#000000</color>
+    <color name="colorPeriodName">#000000</color>
+    <color name="colorPlaceText">#000000</color>
+    <color name="colorData">#098e66</color>
+    <color name="colorBackgroundPractice">#efa226</color>
+    <color name="colorBackgroundLab">#3eb67c</color>
+    <color name="colorBackgroundLecture">#2fa7b9</color>
+    <color name="colorTeacherName">#000000</color>
+    <color name="colorBackgroundMainActivity">#ff0505</color>
+    <color name="colorBackgroundDayList">#ffffff</color>
+    <color name="colorBackgroundDoublePeriod">#d6f1a8</color>
+    <color name="colorBackgroundDoublePeriodTime">#e8ec86</color>
+    <color name="colorBackgroundTeacherName">#97d193</color>
+    <color name="colorBackgroundPlace">#97d193</color>
+</resources>

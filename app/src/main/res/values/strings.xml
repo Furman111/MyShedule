@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Shedule</string>
+
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суботта</string>
+    <string name="sunday">Воскресенье</string>
+
+    <string name="first_week">Первая неделя</string>
+    <string name="second_week">Вторая неделя</string>
+    <string name="third_week">Третья неделя</string>
+    <string name="fourth_week">Четвёртая неделя</string>
+    <string name="fifth_week">Пятая неделя</string>
+    <string name="sixth_week">Шестая неделя</string>
+
+</resources>
