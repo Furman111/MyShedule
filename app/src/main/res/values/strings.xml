@@ -18,4 +18,6 @@
 
     <string name="day_off">Выходной</string>
 
+    <string name="exit_menu_item_text">Выйти</string>
+
 </resources>

@@ -2,8 +2,8 @@ package ru.furman.shedule;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.GregorianCalendar;
 
@@ -12,13 +12,11 @@ import ru.furman.shedule.shedule.Shedule;
 import ru.furman.shedule.shedule.SheduleDay;
 import ru.furman.shedule.shedule.SheduleWeek;
 
-import static ru.furman.shedule.shedule.SheduleWeek.MONDAY;
-import static ru.furman.shedule.shedule.SheduleWeek.SUNDAY;
-import static ru.furman.shedule.shedule.SheduleWeek.THURSDAY;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView lv;
+    private DayListAdapter dayListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +159,14 @@ public class MainActivity extends AppCompatActivity {
         shedule.logShedule();
 
         lv = (ListView) findViewById(R.id.days_lv);
+        dayListAdapter = new DayListAdapter(this,shedule);
         lv.setAdapter(new DayListAdapter(this, shedule));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        dayListAdapter.notifyDataSetChanged();
     }
 
 }
