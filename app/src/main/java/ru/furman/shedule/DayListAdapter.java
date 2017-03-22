@@ -1,23 +1,16 @@
 package ru.furman.shedule;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
-import java.util.List;
+
 
 import ru.furman.shedule.shedule.DoublePeriod;
 import ru.furman.shedule.shedule.Shedule;
@@ -49,7 +42,8 @@ public class DayListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        Calendar currentDate = getCurrentDate();
+
+        Calendar currentDate = Calendar.getInstance();
         Calendar dateOfStudyingStart = shedule.getDateOfStudyingStart();
 
         if (currentDate.get(Calendar.HOUR_OF_DAY) >= 18)
@@ -79,13 +73,13 @@ public class DayListAdapter extends BaseAdapter {
 
         SheduleDay sheduleDay = (SheduleDay) getItem(position);
 
-        Calendar currentDate = getCurrentDate();
+        Calendar currentDate = Calendar.getInstance();
         if (currentDate.get(Calendar.HOUR_OF_DAY) >= 18)
             currentDate.add(Calendar.DAY_OF_YEAR, 1);
         currentDate.add(Calendar.DAY_OF_YEAR, position);
 
 
-        if (sheduleDay == null || sheduleDay.isEmpty()) {
+        if (sheduleDay == null || sheduleDay.isEmpty() || isDayOff()) {
             view = layoutInflater.inflate(R.layout.day_off, parent, false);
 
             TextView dateTv = (TextView) view.findViewById(R.id.date_tv);
@@ -169,16 +163,31 @@ public class DayListAdapter extends BaseAdapter {
         return res;
     }
 
-    public static Calendar getCurrentDate() {
-        Calendar currentDate = new GregorianCalendar();
-        if (currentDate.get(Calendar.HOUR_OF_DAY) >= 18)
-            currentDate.add(Calendar.DAY_OF_YEAR, 1);
-        return currentDate;
-    }
-
     public static String dayAndMonthToString(Calendar date) {
         Formatter formatter = new Formatter();
         return formatter.format("%02d.%02d", date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH) + 1).toString();
+    }
+
+    //method that check russian state days off
+    private boolean isDayOff(){
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
+        switch (month){
+            case 1:
+                if (day<=8) return true;
+            case 2:
+                if(day==23) return true;
+            case 3:
+                if(day==8) return true;
+            case 5:
+                if((day==1) || (day==9)) return true;
+            case 6:
+                if(day==12) return true;
+            case 11:
+                if(day==4) return true;
+        }
+        return false;
     }
 
 }
