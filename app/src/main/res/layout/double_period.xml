@@ -32,6 +32,7 @@
             android:background="@color/colorBackgroundLecture"
             android:gravity="center_horizontal|center_vertical"
             android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
             android:text="Metrologia"
             android:textColor="@color/colorTime"
             android:textSize="22sp"
@@ -48,7 +49,7 @@
             android:background="@color/colorBackgroundTeacherName"
             android:gravity="center_horizontal|center_vertical"
             android:text="Ivanov"
-            android:textColor="@color/colorTeacherName"
+            android:textColor="@color/colorTeacherNameText"
             android:textSize="16sp" />
 
         <TextView

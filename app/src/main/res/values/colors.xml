@@ -11,7 +11,7 @@
     <color name="colorBackgroundPractice">#efa226</color>
     <color name="colorBackgroundLab">#3eb67c</color>
     <color name="colorBackgroundLecture">#2fa7b9</color>
-    <color name="colorTeacherName">#000000</color>
+    <color name="colorTeacherNameText">#000000</color>
     <color name="colorBackgroundMainActivity">#aca6a6</color>
     <color name="colorBackgroundDayList">#ffffff</color>
     <color name="colorBackgroundDoublePeriod">#d6f1a8</color>
