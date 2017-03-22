@@ -18,6 +18,28 @@ public class Shedule extends ArrayList<SheduleWeek> {
     public final static String LOGS_TAG = "SheduleLogs";
 
     private Calendar dateOfStudyingStart;
+
+    public void setDateOfStudyingStart(Calendar dateOfStudyingStart) {
+        this.dateOfStudyingStart = dateOfStudyingStart;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    public void setUniversityGroup(String universityGroup) {
+        this.universityGroup = universityGroup;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+
+    }
+
+    public String getUniversityGroup() {
+        return universityGroup;
+    }
+
     private String universityName;
     private String universityGroup;
 
@@ -35,6 +57,10 @@ public class Shedule extends ArrayList<SheduleWeek> {
         for (int i = 0; i < sheduleWeeks.length; i++) {
             add(sheduleWeeks[i]);
         }
+    }
+
+    public Shedule(){
+        super();
     }
 
     public Calendar getDateOfStudyingStart() {
