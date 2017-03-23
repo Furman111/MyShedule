@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*        Shedule shedule1 = new Shedule(new GregorianCalendar(2017, 2, 6), "SSAU", "6310",
+        Shedule shedule1 = new Shedule(new GregorianCalendar(2017, 2, 6), "SSAU", "6310",
                 new SheduleWeek(
                         new SheduleDay(
                                 new DoublePeriod("Военная кафедра", "", "", DoublePeriod.getTimeInMillis(8, 15), DoublePeriod.getTimeInMillis(16, 50), DoublePeriod.PRACTICE)
@@ -158,13 +158,14 @@ public class MainActivity extends AppCompatActivity {
                         ),
                         null
                 )
-        );*/
+        );
 
         db = new DBShedule(this);
         db.open();
+        if(db.getShedulesCount()==0){
+            db.addShedule(shedule1);
+        }
         Shedule shedule = db.getShedule(1);
-
-        //shedule.logShedule();
 
         lv = (ListView) findViewById(R.id.days_lv);
         dayListAdapter = new DayListAdapter(this, shedule);

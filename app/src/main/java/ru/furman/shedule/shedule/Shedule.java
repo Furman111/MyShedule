@@ -68,7 +68,7 @@ public class Shedule extends ArrayList<SheduleWeek> {
     }
 
     public void logShedule() {
-        Log.d(LOGS_TAG, "Shedule for group " + universityGroup + " of " + universityName + ". Shedule consists from " + size() + " weeks:");
+        Log.d(LOGS_TAG, "Shedule for group " + universityGroup + " of " + universityName + ". Date of beginnig studying: "+dateOfStudyingStart.get(Calendar.DAY_OF_MONTH)+"."+(dateOfStudyingStart.get(Calendar.MONTH)+1)+"."+dateOfStudyingStart.get(Calendar.YEAR)+" .Shedule consists from " + size() + " weeks:");
         if (!isEmpty()) {
             for (int i = 0; i < this.size(); i++) {
                 Log.d(LOGS_TAG, "    Week № " + (i + 1) + ":");
