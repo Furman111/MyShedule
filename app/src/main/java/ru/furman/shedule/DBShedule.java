@@ -91,7 +91,7 @@ public class DBShedule {
             cv.put(SHEDULE_COLUMN_GROUP, shedule.getUniversityGroup());
             cv.put(SHEDULE_COLUMN_UNIVERSITY, shedule.getUniversityName());
             cv.put(SHEDULE_COLUMN_ID, sheduleId);
-            db.insert(SHEDULE_TABLE, null, cv);
+            db.update(SHEDULE_TABLE,cv,SHEDULE_COLUMN_ID+" = "+id,null);
 
             for (int i = 0; i < shedule.size(); i++) {
                 int weekId = getMaxId(WEEK_TABLE) + 1;
@@ -258,7 +258,15 @@ public class DBShedule {
         return res;
     }
 
-
+    public int getSheduleId(Shedule shedule){
+        Cursor cursor = db.query(SHEDULE_TABLE,null,SHEDULE_COLUMN_UNIVERSITY+" = "+shedule.getUniversityName()+", "+SHEDULE_COLUMN_GROUP+" = "+shedule.getUniversityGroup()+", "+SHEDULE_COLUMN_DATE_OF_STUDYING_START+" = "+String.valueOf(shedule.getDateOfStudyingStart().getTimeInMillis()),null,null,null,null);
+        if(cursor!=null){
+            cursor.moveToFirst();
+            return cursor.getInt(cursor.getColumnIndex(SHEDULE_COLUMN_ID));
+        }
+        else
+            return -1;
+    }
 
 
     private class DBSheduleHelper extends SQLiteOpenHelper {
