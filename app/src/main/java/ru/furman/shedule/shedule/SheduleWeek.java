@@ -16,7 +16,6 @@ public class SheduleWeek extends HashMap<String, SheduleDay> {
     public static final String SATURDAY = "Saturday";
     public static final String SUNDAY = "Sunday";
 
-
     public SheduleWeek(SheduleDay monday, SheduleDay tuesday, SheduleDay wednesday, SheduleDay thursday, SheduleDay friday, SheduleDay saturday, SheduleDay sunday) {
         super();
         put(MONDAY,monday);
@@ -26,6 +25,10 @@ public class SheduleWeek extends HashMap<String, SheduleDay> {
         put(FRIDAY,friday);
         put(SATURDAY,saturday);
         put(SUNDAY,sunday);
+    }
+
+    public SheduleWeek() {
+        super();
     }
 
     public static String getDayOfWeekInString(int dayOfWeek) {
