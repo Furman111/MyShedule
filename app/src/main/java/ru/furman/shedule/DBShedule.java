@@ -79,8 +79,7 @@ public class DBShedule {
     }
 
 
-    //заменить insert на update
-    public void setSheduleInDatabase(int id, Shedule shedule) {
+    public void setShedule(int id, Shedule shedule) {
         if ((id >= 0) && (id <= getMaxId(SHEDULE_TABLE))) {
             int sheduleId = id;
 
@@ -91,7 +90,7 @@ public class DBShedule {
             cv.put(SHEDULE_COLUMN_GROUP, shedule.getUniversityGroup());
             cv.put(SHEDULE_COLUMN_UNIVERSITY, shedule.getUniversityName());
             cv.put(SHEDULE_COLUMN_ID, sheduleId);
-            db.update(SHEDULE_TABLE,cv,SHEDULE_COLUMN_ID+" = "+id,null);
+            db.update(SHEDULE_TABLE, cv, SHEDULE_COLUMN_ID + " = " + sheduleId, null);
 
             for (int i = 0; i < shedule.size(); i++) {
                 int weekId = getMaxId(WEEK_TABLE) + 1;
@@ -100,7 +99,7 @@ public class DBShedule {
                 cv.put(WEEK_COLUMN_ID, weekId);
                 cv.put(WEEK_COLUMN_NUMBER, i + 1);
                 cv.put(WEEK_COLUMN_SHEDULE_ID, sheduleId);
-                db.insert(WEEK_TABLE, null, cv);
+                db.update(WEEK_TABLE, cv, WEEK_COLUMN_SHEDULE_ID + " = " + sheduleId, null);
 
                 for (int j = 1; j <= 7; j++) {
                     int dayId = getMaxId(DAY_TABLE) + 1;
@@ -109,27 +108,28 @@ public class DBShedule {
                     cv.put(DAY_COLUMN_DAY_OF_WEEK, j);
                     cv.put(DAY_COLUMN_WEEK_ID, weekId);
                     cv.put(DAY_COLUMN_ID, dayId);
-                    db.insert(DAY_TABLE, null, cv);
+                    db.update(DAY_TABLE, cv, DAY_COLUMN_WEEK_ID + " = " + weekId, null);
+                    if (shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)) != null) {
+                        for (int k = 0; k < shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).size(); k++) {
+                            DoublePeriod dp = shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).get(k);
 
-                    for (int k = 0; k < shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).size(); k++) {
-                        DoublePeriod dp = shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).get(k);
-
-                        cv.clear();
-                        cv.put(DP_COLUMN_BEGIN_TIME, (int) dp.get(DoublePeriod.BEGINNING_TIME));
-                        cv.put(DP_COLUMN_END_TIME, (int) dp.get(DoublePeriod.ENDING_TIME));
-                        cv.put(DP_COLUMN_DAY_ID, dayId);
-                        cv.put(DP_COLUMN_NAME, (String) dp.get(DoublePeriod.NAME));
-                        cv.put(DP_COLUMN_PLACE, (String) dp.get(DoublePeriod.PLACE));
-                        cv.put(DP_COLUMN_TEACHER_NAME, (String) dp.get(DoublePeriod.TEACHER));
-                        cv.put(DP_COLUMN_TYPE, (String) dp.get(DoublePeriod.TYPE));
-                        db.insert(DP_TABLE, null, cv);
+                            cv.clear();
+                            cv.put(DP_COLUMN_BEGIN_TIME, (long) dp.get(DoublePeriod.BEGINNING_TIME));
+                            cv.put(DP_COLUMN_END_TIME, (long) dp.get(DoublePeriod.ENDING_TIME));
+                            cv.put(DP_COLUMN_DAY_ID, dayId);
+                            cv.put(DP_COLUMN_NAME, (String) dp.get(DoublePeriod.NAME));
+                            cv.put(DP_COLUMN_PLACE, (String) dp.get(DoublePeriod.PLACE));
+                            cv.put(DP_COLUMN_TEACHER_NAME, (String) dp.get(DoublePeriod.TEACHER));
+                            cv.put(DP_COLUMN_TYPE, (String) dp.get(DoublePeriod.TYPE));
+                            db.update(DP_TABLE, cv, DP_COLUMN_DAY_ID + " = " + dayId, null);
+                        }
                     }
                 }
             }
         }
     }
 
-    public void addSheduleToDatabase(Shedule shedule) {
+    public void addShedule(Shedule shedule) {
         int sheduleId = getMaxId(SHEDULE_TABLE) + 1;
 
         ContentValues cv = new ContentValues();
@@ -158,19 +158,20 @@ public class DBShedule {
                 cv.put(DAY_COLUMN_WEEK_ID, weekId);
                 cv.put(DAY_COLUMN_ID, dayId);
                 db.insert(DAY_TABLE, null, cv);
+                if (shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)) != null) {
+                    for (int k = 0; k < shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).size(); k++) {
+                        DoublePeriod dp = shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).get(k);
 
-                for (int k = 0; k < shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).size(); k++) {
-                    DoublePeriod dp = shedule.get(i).get(SheduleWeek.getDayOfWeekInString(j)).get(k);
-
-                    cv.clear();
-                    cv.put(DP_COLUMN_BEGIN_TIME, (int) dp.get(DoublePeriod.BEGINNING_TIME));
-                    cv.put(DP_COLUMN_END_TIME, (int) dp.get(DoublePeriod.ENDING_TIME));
-                    cv.put(DP_COLUMN_DAY_ID, dayId);
-                    cv.put(DP_COLUMN_NAME, (String) dp.get(DoublePeriod.NAME));
-                    cv.put(DP_COLUMN_PLACE, (String) dp.get(DoublePeriod.PLACE));
-                    cv.put(DP_COLUMN_TEACHER_NAME, (String) dp.get(DoublePeriod.TEACHER));
-                    cv.put(DP_COLUMN_TYPE, (String) dp.get(DoublePeriod.TYPE));
-                    db.insert(DP_TABLE, null, cv);
+                        cv.clear();
+                        cv.put(DP_COLUMN_BEGIN_TIME, (long) dp.get(DoublePeriod.BEGINNING_TIME));
+                        cv.put(DP_COLUMN_END_TIME, (long) dp.get(DoublePeriod.ENDING_TIME));
+                        cv.put(DP_COLUMN_DAY_ID, dayId);
+                        cv.put(DP_COLUMN_NAME, (String) dp.get(DoublePeriod.NAME));
+                        cv.put(DP_COLUMN_PLACE, (String) dp.get(DoublePeriod.PLACE));
+                        cv.put(DP_COLUMN_TEACHER_NAME, (String) dp.get(DoublePeriod.TEACHER));
+                        cv.put(DP_COLUMN_TYPE, (String) dp.get(DoublePeriod.TYPE));
+                        db.insert(DP_TABLE, null, cv);
+                    }
                 }
             }
         }
@@ -184,7 +185,7 @@ public class DBShedule {
         if (cursor != null) {
             cursor.moveToFirst();
             Calendar calendar = new GregorianCalendar();
-            calendar.setTimeInMillis(cursor.getInt(cursor.getColumnIndex(SHEDULE_COLUMN_DATE_OF_STUDYING_START)));
+            calendar.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(SHEDULE_COLUMN_DATE_OF_STUDYING_START)));
             shedule.setDateOfStudyingStart(calendar);
             shedule.setUniversityGroup(cursor.getString(cursor.getColumnIndex(SHEDULE_COLUMN_GROUP)));
             shedule.setUniversityName(cursor.getString(cursor.getColumnIndex(SHEDULE_COLUMN_UNIVERSITY)));
@@ -203,69 +204,97 @@ public class DBShedule {
                             int dayId = cursorDay.getInt(cursorDay.getColumnIndex(DAY_COLUMN_ID));
                             SheduleDay sheduleDay = new SheduleDay();
                             Cursor cursorDP = db.query(DP_TABLE, null, DP_COLUMN_DAY_ID + " = " + dayId, null, null, null, null);
-                            if (cursorDP != null) {
+                            if (cursorDP != null && cursorDP.getCount() > 0) {
                                 cursorDP.moveToFirst();
                                 do {
                                     DoublePeriod dp = new DoublePeriod(
-                                            cursorDP.getString(cursorDP.getColumnIndex(DoublePeriod.NAME)),
-                                            cursorDP.getString(cursorDP.getColumnIndex(DoublePeriod.TEACHER)),
-                                            cursorDP.getString(cursorDP.getColumnIndex(DoublePeriod.PLACE)),
-                                            cursorDP.getInt(cursorDP.getColumnIndex(DoublePeriod.BEGINNING_TIME)),
-                                            cursorDP.getInt(cursorDP.getColumnIndex(DoublePeriod.ENDING_TIME)),
-                                            cursorDP.getString(cursorDP.getColumnIndex(DoublePeriod.TYPE))
+                                            cursorDP.getString(cursorDP.getColumnIndex(DP_COLUMN_NAME)),
+                                            cursorDP.getString(cursorDP.getColumnIndex(DP_COLUMN_TEACHER_NAME)),
+                                            cursorDP.getString(cursorDP.getColumnIndex(DP_COLUMN_PLACE)),
+                                            cursorDP.getLong(cursorDP.getColumnIndex(DP_COLUMN_BEGIN_TIME)),
+                                            cursorDP.getLong(cursorDP.getColumnIndex(DP_COLUMN_END_TIME)),
+                                            cursorDP.getString(cursorDP.getColumnIndex(DP_COLUMN_TYPE))
                                     );
                                     sheduleDay.add(dp);
                                 } while (cursorDP.moveToNext());
                             }
-                            sheduleWeek.put(SheduleWeek.getDayOfWeekInString(cursorDay.getInt(cursorDay.getColumnIndex(DAY_COLUMN_DAY_OF_WEEK))), sheduleDay);
+                            cursorDP.close();
+                            if (sheduleDay.size() > 0)
+                                sheduleWeek.put(SheduleWeek.getDayOfWeekInString(cursorDay.getInt(cursorDay.getColumnIndex(DAY_COLUMN_DAY_OF_WEEK))), sheduleDay);
                         } while (cursorDay.moveToNext());
                     }
-                    shedule.add(cursor.getInt(cursor.getColumnIndex(WEEK_COLUMN_NUMBER)), sheduleWeek);
+                    cursorDay.close();
+                    shedule.add(cursor.getInt(cursor.getColumnIndex(WEEK_COLUMN_NUMBER)) - 1, sheduleWeek);
                 } while (cursor.moveToNext());
             }
+            cursor.close();
             return shedule;
         } else
             return null;
     }
 
-    public List<Shedule> getShedulesInfo(){
+    public List<Shedule> getShedulesInfo() {
         List<Shedule> sheduleList = new ArrayList<>();
-        Cursor cursor = db.query(SHEDULE_TABLE,null,null,null,null,null,null);
-        if(cursor!=null){
+        Cursor cursor = db.query(SHEDULE_TABLE, null, null, null, null, null, null);
+        if (cursor != null) {
             Shedule shedule = new Shedule();
             shedule.setUniversityName(cursor.getString(cursor.getColumnIndex(SHEDULE_COLUMN_UNIVERSITY)));
             shedule.setUniversityGroup(cursor.getString(cursor.getColumnIndex(SHEDULE_COLUMN_GROUP)));
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(cursor.getInt(cursor.getColumnIndex(SHEDULE_COLUMN_DATE_OF_STUDYING_START)));
+            calendar.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(SHEDULE_COLUMN_DATE_OF_STUDYING_START)));
             shedule.setDateOfStudyingStart(calendar);
             sheduleList.add(shedule);
         }
+        cursor.close();
         return sheduleList;
     }
 
     private int getMaxId(String tableName) {
-        Cursor cursor = db.rawQuery("select max(_id) from " + tableName, null);
+        Cursor cursor = db.query(tableName, null, null, null, null, null, null);
         int res = 0;
         if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                res++;
-                while (cursor.moveToNext()) {
-                    res++;
-                }
-            }
+            res = cursor.getCount();
         }
         cursor.close();
         return res;
     }
 
-    public int getSheduleId(Shedule shedule){
-        Cursor cursor = db.query(SHEDULE_TABLE,null,SHEDULE_COLUMN_UNIVERSITY+" = "+shedule.getUniversityName()+", "+SHEDULE_COLUMN_GROUP+" = "+shedule.getUniversityGroup()+", "+SHEDULE_COLUMN_DATE_OF_STUDYING_START+" = "+String.valueOf(shedule.getDateOfStudyingStart().getTimeInMillis()),null,null,null,null);
-        if(cursor!=null){
+    public int getSheduleId(Shedule shedule) {
+        Cursor cursor = db.query(SHEDULE_TABLE, null, SHEDULE_COLUMN_UNIVERSITY + " = " + shedule.getUniversityName() + ", " + SHEDULE_COLUMN_GROUP + " = " + shedule.getUniversityGroup() + ", " + SHEDULE_COLUMN_DATE_OF_STUDYING_START + " = " + String.valueOf(shedule.getDateOfStudyingStart().getTimeInMillis()), null, null, null, null);
+        int res = -1;
+        if (cursor != null) {
             cursor.moveToFirst();
-            return cursor.getInt(cursor.getColumnIndex(SHEDULE_COLUMN_ID));
+            res = cursor.getInt(cursor.getColumnIndex(SHEDULE_COLUMN_ID));
         }
-        else
-            return -1;
+        cursor.close();
+        return res;
+    }
+
+    public void deleteShedule(int id) {
+        int sheduleID = id;
+        db.delete(SHEDULE_TABLE, SHEDULE_COLUMN_ID + " = " + sheduleID, null);
+        Cursor cursorWeeks = db.query(WEEK_TABLE, new String[]{WEEK_COLUMN_ID}, WEEK_COLUMN_SHEDULE_ID + " = " + sheduleID, null, null, null, null);
+        if (cursorWeeks != null) {
+            cursorWeeks.moveToFirst();
+            do {
+                int weekId = cursorWeeks.getInt(cursorWeeks.getColumnIndex(WEEK_COLUMN_ID));
+
+                Cursor cursorDays = db.query(DAY_TABLE, new String[]{DAY_COLUMN_ID}, DAY_COLUMN_WEEK_ID + " = " + weekId, null, null, null, null);
+                if (cursorDays != null) {
+                    cursorDays.moveToFirst();
+                    do {
+                        int dayId = cursorDays.getInt(cursorDays.getColumnIndex(DAY_COLUMN_ID));
+                        db.delete(DP_TABLE, DP_COLUMN_DAY_ID + " = " + dayId, null);
+                    } while (cursorDays.moveToNext());
+                }
+                cursorDays.close();
+
+                db.delete(DAY_TABLE, DAY_COLUMN_WEEK_ID + " = " + weekId, null);
+            } while (cursorWeeks.moveToNext());
+            cursorWeeks.close();
+
+            db.delete(WEEK_TABLE, WEEK_COLUMN_SHEDULE_ID + " = " + sheduleID, null);
+        }
     }
 
 

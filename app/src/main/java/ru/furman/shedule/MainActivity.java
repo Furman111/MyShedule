@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Shedule shedule = new Shedule(new GregorianCalendar(2017, 2, 6), "SSAU", "6310",
+/*        Shedule shedule1 = new Shedule(new GregorianCalendar(2017, 2, 6), "SSAU", "6310",
                 new SheduleWeek(
                         new SheduleDay(
                                 new DoublePeriod("Военная кафедра", "", "", DoublePeriod.getTimeInMillis(8, 15), DoublePeriod.getTimeInMillis(16, 50), DoublePeriod.PRACTICE)
@@ -158,20 +158,13 @@ public class MainActivity extends AppCompatActivity {
                         ),
                         null
                 )
-        );
-
+        );*/
 
         db = new DBShedule(this);
         db.open();
-        if (db.getShedulesCount() == 0) {
-            Log.d(LOG_TAG, "Идёт создание базы данных!!!!!!!!!!!");
-            db.addSheduleToDatabase(shedule);
-            Log.d(LOG_TAG, "Расписаний в базе данных: " + db.getShedulesCount());
-        } else
-            Log.d(LOG_TAG, "Расписаний в базе данных: " + db.getShedulesCount());
+        Shedule shedule = db.getShedule(1);
 
-
-        shedule.logShedule();
+        //shedule.logShedule();
 
         lv = (ListView) findViewById(R.id.days_lv);
         dayListAdapter = new DayListAdapter(this, shedule);

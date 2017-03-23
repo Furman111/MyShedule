@@ -57,7 +57,6 @@ public class DayListAdapter extends BaseAdapter {
             weekNumber = shedule.size();
 
         int dayOfWeek = currentDate.get(Calendar.DAY_OF_WEEK) - 1;
-
         return shedule.get(weekNumber - 1).get(SheduleWeek.getDayOfWeekInString(dayOfWeek));
     }
 
